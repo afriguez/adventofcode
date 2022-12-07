@@ -33,12 +33,10 @@ defmodule Day2 do
         "A X" -> "A Z"
         "A Y" -> "A X"
         "A Z" -> "A Y"
-        "B X" -> "B X"
-        "B Y" -> "B Y"
-        "B Z" -> "B Z"
         "C X" -> "C Y"
         "C Y" -> "C Z"
         "C Z" -> "C X"
+        _ -> &1
       end
     )
     |> Enum.map(&score/1)
