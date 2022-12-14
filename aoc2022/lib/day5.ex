@@ -18,6 +18,35 @@ defmodule Day5 do
         |> Map.put(to, Enum.reverse(to_move) ++ crates[to])
       end
     end)
+    |> Enum.map(fn {_pos, stack} ->
+      hd(stack)
+    end)
+    |> Enum.join()
+  end
+
+  def part_two() do
+    {:ok, input} = File.read("./lib/day5.input")
+
+    [first_half, second_half] = String.split(input, "\n\n", trim: true)
+
+    crates = parse_crates(first_half)
+    commands = parse_commands(second_half)
+
+    Enum.reduce(commands, crates, fn cmd, crates ->
+      if is_list(cmd) do
+        [amount, from, to] = cmd
+
+        {to_move, to_conserve} = Enum.split(crates[from], amount)
+
+        crates
+        |> Map.put(from, to_conserve)
+        |> Map.put(to, to_move ++ crates[to])
+      end
+    end)
+    |> Enum.map(fn {_pos, stack} ->
+      hd(stack)
+    end)
+    |> Enum.join()
   end
 
   def parse_crates(crates) do
